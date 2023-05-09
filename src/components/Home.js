@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import 'bootstrap/dist/css/bootstrap.css';
 
 export default function Home() {
     const [users, setUsers] = useState([]);
@@ -21,8 +22,9 @@ export default function Home() {
             <section className="main-content">
                 <div className="container">
                     <h1>Users Table UI</h1>
-
-                    <table className="table">
+                    <br/>
+                    <br/>
+                    <table className="table" border={1}>
                         <thead>
                         <tr>
                             <th>name</th>
@@ -31,6 +33,7 @@ export default function Home() {
                             <th colSpan={3}>Actions</th>
                         </tr>
                         </thead>
+
                         <tbody>
                         {users.map((item) => {
                             return (
@@ -39,13 +42,13 @@ export default function Home() {
                                     <td>{item.age}</td>
                                     <td>{item.address}</td>
                                     <td>
-                                        <button>View</button>
+                                       <Link to={`/views/${item.id}`}>Views</Link>
                                     </td>
                                     <td>
                                         <Link to={`/edit/${item.id}`}>Edit</Link>
                                     </td>
                                     <td>
-                                        <button>Delete</button>
+                                        <Link to={`/delete/${item.id}`}>Delete</Link>
                                     </td>
                                 </tr>
                             );
@@ -54,6 +57,10 @@ export default function Home() {
                     </table>
                 </div>
             </section>
+            <br/>
+            <Link to={"/search"}>Search</Link>
+            <br/>
+           <Link to={`/create/user`}>CreateUser</Link>
         </div>
     );
 }

@@ -1,48 +1,40 @@
-import React, { useState, useEffect } from "react";
+import {useState} from "react";
 import axios from "axios";
-import {Link, useParams} from "react-router-dom";
+import {Link} from "react-router-dom";
 
-export default function Edit() {
-    const { id } = useParams();
-    const [user, setUser] = useState({
-        name: "",
-        age: "",
-        address: ""
+export default function Create() {
+    const [user,setUser]=useState({
+        name:"",
+        age:"",
+        address:""
     });
-
-    useEffect(() => {
-        axios
-            .get(`http://localhost:8080/api/find-by-id/${id}`)
-            .then((response) => {
-                setUser(response.data);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    }, [id]);
-
-    const handleChange = (event) => {
+    const handleChange=(event)=>{
         setUser({
             ...user,
-            [event.target.name]: event.target.value
+            [event.target.name]:event.target.values,
         });
     };
-
     const handleSubmit = (event) => {
         event.preventDefault();
         axios
-            .put(`http://localhost:8080/api/updateUser/${id}`, user)
-            .then((response) => {
-                console.log("Người dùng đã được cập nhật thành công");
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    };
+            .post("http://localhost:8080/api/createUser",user)
+            .then(response=>{
+                console.log("create success",response.data);
+                setUser({
+                    name:"",
+                    age:"",
+                    address:""
+                })
 
+                }
+            ).catch(error=>{
+            console.log(error)
+        })
+      
+    };
     return (
         <div>
-            <h1>Edit User</h1>
+            <h1>Create User</h1>
             <form onSubmit={handleSubmit}>
                 <div>
                     <label htmlFor="name">Name:</label>
@@ -74,10 +66,10 @@ export default function Edit() {
                         onChange={handleChange}
                     />
                 </div>
-                <button type="submit">Update</button>
-                <button ><Link to={"/"}>Back</Link></button>
-
+                <button type="submit">Create</button>
+                <button><Link to={"/"}>Back</Link></button>
             </form>
         </div>
     );
+
 }
