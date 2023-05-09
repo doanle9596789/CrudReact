@@ -11,7 +11,7 @@ export default function Create() {
     const handleChange=(event)=>{
         setUser({
             ...user,
-            [event.target.name]:event.target.values,
+            [event.target.name]:event.target.value,
         });
     };
     const handleSubmit = (event) => {
